@@ -1,0 +1,10 @@
+.main{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.card{
+    display: flex;
+    border: 1px dashed black;
+}
