@@ -23,61 +23,74 @@ const update = (id) => {
             imageUpd.src = data.photo;
         })
 
-        updFile.addEventListener('input',(e)=>{
-            imageUpd.src = e.target.value;
-        })
+    let obj = {};
 
-    updateButton.addEventListener('click', () => {
-        let name = updInput.value;
+    updFile.addEventListener('input', (e) => {
         let file = updFile.files[0];
-
-        let obj = {name};
-
-
-  
         if (file) {
             let reader = new FileReader();
 
             reader.readAsDataURL(file);
             reader.onload = function () {
-
-                if (reader.result) {
-                    obj.photo = reader.result;
-                    
-                }
-
-
-              
-         
-
-                fetch(`http://localhost:3000/api/${id}`,
-                    {
-                        method: "PATCH",
-
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(obj)
-                    }).then(res => res.json()).then(data => console.log(data))
-
-                // axios.patch(`http://localhost:3000/api/${id}`,obj)
-                // .then(res=> console.log(res.data))
+                obj.photo = reader.result;
+                imageUpd.src = reader.result;
             }
-        }else{
-            fetch(`http://localhost:3000/api/${id}`,
-            {
-                method: "PATCH",
-
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(obj)
-            }).then(res => res.json()).then(data => console.log(data))
         }
     })
 
+    updateButton.addEventListener('click', () => {
+        let name = updInput.value;
 
+        obj.name = name;
+
+
+
+        // if (file) {
+        //     let reader = new FileReader();
+
+        //     reader.readAsDataURL(file);
+        //     reader.onload = function () {
+
+        //         if (reader.result) {
+        //             obj.photo = reader.result;
+
+        //         }
+
+
+
+
+
+        //         fetch(`http://localhost:3000/api/${id}`,
+        //             {
+        //                 method: "PATCH",
+
+        //                 headers: {
+        //                     "Content-Type": "application/json",
+        //                 },
+        //                 body: JSON.stringify(obj)
+        //             }).then(res => res.json()).then(data => console.log(data))
+
+        //         // axios.patch(`http://localhost:3000/api/${id}`,obj)
+        //         // .then(res=> console.log(res.data))
+        //     }
+        // } else {
+        // fetch(`http://localhost:3000/api/${id}`,
+        //     {
+        //         method: "PATCH",
+
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify(obj)
+        //     }).then(res => res.json()).then(data => console.log(data))
+
+        axios.patch(`http://localhost:3000/api/${id}`,obj)
+    })
 }
+// })
+
+
+// }
 
 
 
